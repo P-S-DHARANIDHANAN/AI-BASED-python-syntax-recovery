@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parsely — AI Python Syntax Helper</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <span class="logo"><span class="leaf">✶</span> Parse<span class="leaf">ly</span></span>
+        <span class="tag">AI-assisted Python syntax errors, explained in plain English</span>
+      </div>
+      <div class="top-actions">
+        <span class="ai-badge" id="aiBadge" title="AI explanation status">checking…</span>
+        <div class="seg" role="group" aria-label="Explanation style">
+          <button id="mode-direct" aria-pressed="true">Direct</button>
+          <button id="mode-hint" aria-pressed="false">Hint only</button>
+        </div>
+        <button class="icon-btn" id="theme" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <!-- editor -->
+      <section class="panel" aria-label="Code editor">
+        <div class="panel-head">
+          <h2>Your Python</h2>
+          <div class="spacer"></div>
+          <button class="mini toggle" id="autofix" aria-pressed="false"
+            title="Let the AI apply fixes automatically when you pause typing">Auto-fix: off</button>
+          <select class="mini" id="examples" aria-label="Load an example">
+            <option value="">Load example…</option>
+            <option value="multi">Missing colons &amp; print</option>
+            <option value="brackets">Unclosed bracket &amp; string</option>
+            <option value="hints">Typo &amp; = vs ==</option>
+            <option value="indent">Indentation slip</option>
+            <option value="clean">Clean code</option>
+          </select>
+          <button class="mini" id="clear">Clear</button>
+          <button class="primary" id="check">Check</button>
+        </div>
+        <div class="editor">
+          <div class="gutter" id="gutter" aria-hidden="true"></div>
+          <div class="code-wrap">
+            <textarea id="code" class="code-face" spellcheck="false" autocapitalize="off"
+              autocorrect="off" wrap="off" placeholder="Type or paste Python here…"></textarea>
+            <div class="overlay" aria-hidden="true">
+              <div class="overlay-inner" id="ovInner"><pre id="mirror" class="mirror code-face"></pre></div>
+            </div>
+          </div>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--err)"></i> error</span>
+          <span><i style="background:var(--warn)"></i> suggestion</span>
+          <span><i style="background:var(--ok)"></i> proposed fix</span>
+          <span id="live-status" style="margin-left:auto">live checking</span>
+        </div>
+        <span id="probe">0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</span>
+      </section>
+
+      <!-- findings -->
+      <section class="panel" aria-label="Findings">
+        <div class="panel-head">
+          <h2>What Parsely found</h2>
+          <div class="spacer"></div>
+          <span class="loc" id="engine-note">heuristic engine + AI</span>
+        </div>
+        <div class="results" id="results"></div>
+      </section>
+    </div>
+
+    <footer>
+      Parsely detects and locates errors with a Python tokenizer and parser written from scratch (the reliable, offline part),
+      then uses the Gemini AI to write the plain-English explanation, the hint, and the autocorrect (the intelligent part).
+      If no API key is configured it falls back to built-in explanations, so it always runs. Findings are suggestions — read them before applying a fix.
+    </footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

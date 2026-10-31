@@ -1,0 +1,9 @@
+# never commit your real key
+backend/.env
+
+# python caches
+__pycache__/
+*.pyc
+
+# os cruft
+.DS_Store
